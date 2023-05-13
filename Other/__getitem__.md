@@ -110,7 +110,7 @@ Jerry
 
 위 코드는 __iter__ 를 사용하지 않았음에도 for에서 잘 동작하는데 이렇게 되는 이유는 파이썬이 객체를 통해 for loop를 작동하고자 할 떄 다음과 같은 순서로 체크하기 때문이다.
 
-+ 1. __iter__가 제공되는지 확인하고, 있으면 이를 통해 iter(obj)를 사용한다.
-+ 2.만약 __iter__가 없다면 __getitem__ 이 있는지 확인하고 있으면 index 0 부터 시작해서 *IndexError* 가 발생할 때까지 __getitem__(index) 를 호출해서 for loop 를 작동신킨다.
++ __iter__가 제공되는지 확인하고, 있으면 이를 통해 iter(obj)를 사용한다.
++ 만약 __iter__가 없다면 __getitem__ 이 있는지 확인하고 있으면 index 0 부터 시작해서 *IndexError* 가 발생할 때까지 __getitem__(index) 를 호출해서 for loop 를 작동신킨다.
 
 이렇기 떄문에 __getitem__ 메서드가 정의 되어있으면 iterable type으로 취급되기 때문에 추가적인 코드 없이 위 동작이 가능한 것이다. 
