@@ -14,3 +14,40 @@
 + 객체 생성 및 제거
 + 문자열 표현 및 포맷
 + 블록 등 콘텍스트 관리
+
+특별메서드는 마술메서드(magic method) 혹은 __method__() 의 더블 언더바를 줄인 던더메서드 라고도 한다.
+
+
+
+## 카드 한 벌
+다음 예제 코드는 특별 메서드 __getitem__()과 __len__()만으로 강력한 기능을 구현할 수 있다는 것을 보여준다.
+
+```python
+import collections
+
+Card = collections.namedtuple('Card', ['rank', 'suit'])
+
+class FrenchDeck:
+    ranks = [str(n) for n in range(2, 11)] + list('JQKA')
+    suits = 'spades diamonds clubs hearts'.split()
+    
+    def __init__(self):
+        self._cards = [Card(rank, suit) for suit in self.suits
+                                        for rank in self.ranks]
+        
+    def __len__(self):
+        return len(self._cards)
+    
+    def __getitem__(self, position):
+        return self._cards[position]
+
+```
+먼저 collections.namedtuple()을 이용하여 개별 카드를 나타내는 클래스를 먼저 구현했다. 파이썬 2.6부터는 namedtuple을 이용하여 데이터베이스의 레코드처럼 메서드를 가지지 않는 일련의 속성으로 구성된 클래스를 만들 수 있다.
+
+```bash
+>>> beer_card = Card('7', 'diamonds')
+>>> Card(rank='7', suit='diamonds')
+```
+
+하지만 이 코드의 핵심은 FrenchDeck 클래스이다. 먼저 일반적인 파이썬 컬렉션과 마찬가지로 len() 함수를 통해 자신이 갖고 있는 카드의 수를 반환한다.
+
